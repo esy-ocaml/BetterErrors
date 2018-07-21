@@ -3,8 +3,7 @@ build:
 	jbuilder build -j 8
 
 install: build 
-	esy-installer refmterr
-	esy-installer refmterr-lib
+	esy-installer
 
 test:
 	jbuilder runtest
