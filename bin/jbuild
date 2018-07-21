@@ -15,7 +15,7 @@
     ; Depends on:
     ; - 2 local libraries defined in this project.
     ; - 1 library flow parser, defined in package dependency flow_parser.
-    (libraries (refmterrLib re.pcre unix))
+    (libraries (refmterr.lib re.pcre unix))
   )
 )
 

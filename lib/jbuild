@@ -2,6 +2,6 @@
 (jbuild_version 1)
 
 (library (
-  (name refmterrLib)
-  (public_name refmterr-lib)
+  (name Refmterr)
+  (public_name refmterr.lib)
   (libraries (re.pcre unix))))

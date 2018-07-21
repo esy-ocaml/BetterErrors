@@ -45,7 +45,7 @@ let prettifyGlobalBuildStores = logLine =>
     logLine,
   );
 
-RefmterrLib.Index.parseFromStdin(
+Refmterr.Index.parseFromStdin(
   ~refmttypePath=refmttypePath^,
   ~customLogOutputProcessors=[prettifyGlobalBuildStores],
   ~customErrorParsers=[],
