@@ -50,15 +50,15 @@ let moreThanOneSpace = Re.Pcre.regexp({|\s[\s]*|});
 let subOneSpace = s => " ";
 
 /*
- * Collapses multiple spaces into a single space.
- */
+* Collapses multiple spaces into a single space.
+*/
 let collapseSpacing = s =>
   Re.Pcre.substitute(~rex=moreThanOneSpace, ~subst=subOneSpace, s);
 
 /*
- * Replaces the common module alias names with their conceptual counterparts
- * (double underscores become dot).
- */
+* Replaces the common module alias names with their conceptual counterparts
+* (double underscores become dot).
+*/
 let removeModuleAlias = s =>
   Re.Pcre.substitute(~rex=doubleUnder, ~subst=subDot, s);
 
@@ -123,20 +123,20 @@ let optionMap = (f, a) =>
 let listFilterMap = (f, lst) =>
   List.map(f, lst)
   |> List.filter(
-       fun
-       | Some(a) => true
-       | None => false,
-     )
+      fun
+      | Some(a) => true
+      | None => false,
+    )
   |> List.map(optionGet);
 
 let listFindMap = (f, lst) =>
   lst
   |> List.find(a =>
-       switch (f(a)) {
-       | Some(x) => true
-       | None => false
-       }
-     )
+      switch (f(a)) {
+      | Some(x) => true
+      | None => false
+      }
+    )
   |> f
   |> optionGet;
 
@@ -276,215 +276,41 @@ let rec splitInto = (~chunckSize, l: list('a)) : list(list('a)) =>
     ];
   };
 
-let resetANSI = "\027[0m";
-
-let bold = s => "\027[1m" ++ s ++ resetANSI;
-
-let boldCode = b => b ? "\027[1m" : "";
-
-let invert = s => "\027[7m" ++ s ++ resetANSI;
-
-let invertCode = b => b ? "\027[7m" : "";
-
-let dim = s => "\027[2m" ++ s ++ resetANSI;
-
-let dimCode = b => b ? "\027[2m" : "";
-
-let underlineCode = u => u ? "\027[4m" : "";
-
-let normalCode = "\027[39m";
-
-let redCode = "\027[31m";
-
-let yellowCode = "\027[33m";
-
-let blueCode = "\027[34m";
-
-let greenCode = "\027[32m";
-
-let purpleCode = "\027[35m";
-
-let cyanCode = "\027[36m";
-
-let underline = s => underlineCode(true) ++ s ++ resetANSI;
-
-let normal = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-  underlineCode(underline)
-  ++ invertCode(invert)
-  ++ dimCode(dim)
-  ++ boldCode(bold)
-  ++ normalCode
-  ++ s
-  ++ resetANSI;
-
-let red = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-  underlineCode(underline)
-  ++ invertCode(invert)
-  ++ dimCode(dim)
-  ++ boldCode(bold)
-  ++ redCode
-  ++ s
-  ++ resetANSI;
-
-let yellow = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-  underlineCode(underline)
-  ++ invertCode(invert)
-  ++ dimCode(dim)
-  ++ boldCode(bold)
-  ++ yellowCode
-  ++ s
-  ++ resetANSI;
-
-let blue = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-  underlineCode(underline)
-  ++ invertCode(invert)
-  ++ dimCode(dim)
-  ++ boldCode(bold)
-  ++ blueCode
-  ++ s
-  ++ resetANSI;
-
-let green = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-  underlineCode(underline)
-  ++ invertCode(invert)
-  ++ dimCode(dim)
-  ++ boldCode(bold)
-  ++ greenCode
-  ++ s
-  ++ resetANSI;
-
-let cyan = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-  underlineCode(underline)
-  ++ invertCode(invert)
-  ++ dimCode(dim)
-  ++ boldCode(bold)
-  ++ cyanCode
-  ++ s
-  ++ resetANSI;
-
-let purple = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-  underlineCode(underline)
-  ++ invertCode(invert)
-  ++ dimCode(dim)
-  ++ boldCode(bold)
-  ++ purpleCode
-  ++ s
-  ++ resetANSI;
-
 let mapcat = (sep, f, l) => String.concat(sep, List.map(f, l));
 
 let sp = Printf.sprintf;
 
-let highlight =
-    (
-      ~underline=false,
-      ~invert=false,
-      ~dim=false,
-      ~bold=false,
-      ~color=normal,
-      ~first=0,
-      ~last=99999,
-      str,
-    ) =>
-  stringSlice(~last=first, str)
-  ++ color(
-       ~underline,
-       ~dim,
-       ~invert,
-       ~bold,
-       stringSlice(~first, ~last, str),
-     )
-  ++ stringSlice(~first=last, str);
-
 /*
- * Returns whether or not the string has newlines. Only looks for \n so just
- * use this for non-critical things.
- */
+* Returns whether or not the string has newlines. Only looks for \n so just
+* use this for non-critical things.
+*/
 let hasNewline = str =>
   switch (String.index_from(str, 0, '\n')) {
   | exception e => false
   | _ => true
   };
 
-let tokens = [
-  /* Named arguments */
-  ({|~[a-z][a-zA-Z0-9_']*\b|}, yellow),
-  ({|\blet\b|\bmodule\b|\blet\b|\btype\b|\bopen\b|}, purple),
-  (
-    {|\bif\b|\belse\b|\bfor\b|\bfor\b|\bwhile\b|\bswitch\b|\bint\b|\bstring\b|\blist\b|},
-    yellow,
-  ),
-  ({|\b[0-9]+\b|}, blue),
-  ({|\b[A-Z][A-Za-z0-9_]*\b|}, blue),
-  ({|\s\+\+\s|\s\+\s|\s\-\s|\s=>\s|\s==\s|}, red),
-];
+  let isWhiteChar = c => c === ' ' || c === '\n' || c === '\t' || c === '\r';
 
-let tokenRegex =
-  String.concat("|", List.map(((rStr, _)) => "(" ++ rStr ++ ")", tokens));
+  let isWordBoundary = c => c === '.' || c === ',' || c === '(' || c === ')';
 
-/*
- * This is so much more complicated because highlighting doesn't support
- * nesting right now.
- */
-let highlightTokens = (~dim, ~bold, ~underline, txt, tokens) => {
-  let rex = Re.Pcre.regexp(tokenRegex);
-  let splitted = Re.Pcre.full_split(~rex, txt);
-  let strings =
-    List.map(
-      fun
-      | Re.Pcre.Text(s) => highlight(~dim, ~bold, ~underline, s)
-      | Delim(s) => "" /* Let the Group do the highlighting */
-      | Group(i, s) => {
-          let (r, color) = List.nth(tokens, i - 1);
-          highlight(~dim, ~bold, ~underline, ~color, s);
-        }
-      | NoGroup => "",
-      splitted,
-    );
-  String.concat("", strings);
-};
-
-let highlightSource = (~dim=false, ~underline=false, ~bold=false, txt) => {
-  let splitOnQuotes = splitOnChar('"', txt);
-  let balancedQuotes = List.length(splitOnQuotes) mod 2 === 1;
-  if (balancedQuotes) {
-    let chunks =
-      List.mapi(
-        (i, chunk) =>
-          if (i mod 2 === 0) {
-            highlightTokens(~dim, ~underline, ~bold, chunk, tokens);
-          } else {
-            highlight(~dim, ~underline, ~color=green, "\"" ++ chunk ++ "\"");
-          },
-        splitOnQuotes,
-      );
-    String.concat("", chunks);
-  } else {
-    highlightTokens(~dim, ~bold, ~underline, txt, tokens);
-  };
-};
-
-let isWhiteChar = c => c === ' ' || c === '\n' || c === '\t' || c === '\r';
-
-let isWordBoundary = c => c === '.' || c === ',' || c === '(' || c === ')';
-
-/*
- * prevIndex is the index before the search start location. (or after if inc is
- * negative)
- */
-let nextNonWhiteChar = (s, inc, prevIndex) => {
-  let res = {contents: None};
-  let i = {contents: prevIndex + inc};
-  let len = String.length(s);
-  while (res.contents === None && i.contents < len && i.contents > (-1)) {
-    if (isWhiteChar(s.[i.contents])) {
-      i.contents = i.contents + inc;
-    } else {
-      res.contents = Some(i.contents);
+  /*
+  * prevIndex is the index before the search start location. (or after if inc is
+  * negative)
+  */
+  let nextNonWhiteChar = (s, inc, prevIndex) => {
+    let res = {contents: None};
+    let i = {contents: prevIndex + inc};
+    let len = String.length(s);
+    while (res.contents === None && i.contents < len && i.contents > (-1)) {
+      if (isWhiteChar(s.[i.contents])) {
+        i.contents = i.contents + inc;
+      } else {
+        res.contents = Some(i.contents);
+      };
     };
+    res.contents;
   };
-  res.contents;
-};
 
 /*
  * Returns the (aStartLen, aEndLen, bStartLen, bEndLen) of string a that
@@ -506,8 +332,8 @@ let findCommonEnds = (aStr, bStr) => {
   let continuePrefix = {contents: true};
   let continueSuffix = {contents: true};
   while (continuePrefix.contents
-         && aPrefixLen.contents <= aLen
-         && bPrefixLen.contents <= bLen) {
+        && aPrefixLen.contents <= aLen
+        && bPrefixLen.contents <= bLen) {
     let nextNonwhiteA = nextNonWhiteChar(aStr, 1, aPrefixLen.contents - 1);
     let nextNonwhiteB = nextNonWhiteChar(bStr, 1, bPrefixLen.contents - 1);
     switch (nextNonwhiteA, nextNonwhiteB) {
@@ -532,7 +358,7 @@ let findCommonEnds = (aStr, bStr) => {
       continuePrefix.contents = false;
     | (Some(na), Some(nb)) =>
       /* Or if we didn't merely increment within a word, mark the end of
-       * previous word as prefix  */
+      * previous word as prefix  */
       if (na > aPrefixLen.contents + 1 && nb > bPrefixLen.contents + 1) {
         aPrefixLenBoundary.contents = aPrefixLen.contents;
         bPrefixLenBoundary.contents = bPrefixLen.contents;
@@ -550,23 +376,23 @@ let findCommonEnds = (aStr, bStr) => {
     };
   };
   while (continueSuffix.contents
-         && aSuffixLen.contents < aLen
-         - aPrefixLenBoundary.contents
-         && bSuffixLen.contents < bLen
-         - bPrefixLenBoundary.contents) {
+        && aSuffixLen.contents < aLen
+        - aPrefixLenBoundary.contents
+        && bSuffixLen.contents < bLen
+        - bPrefixLenBoundary.contents) {
     let nextNonwhiteA =
       nextNonWhiteChar(aStr, -1, aLen - aSuffixLen.contents);
     let nextNonwhiteB =
       nextNonWhiteChar(bStr, -1, bLen - bSuffixLen.contents);
     switch (nextNonwhiteA, nextNonwhiteB) {
     /* I think these first three cases would have been caught by the prefix
-     * finding portion */
+    * finding portion */
     | (None, None)
     | (None, Some(_))
     | (Some(_), None) => continueSuffix.contents = false
     | (Some(na), Some(nb)) =>
       /* Or if we didn't merely increment within a word, mark the end of
-       * previous word as prefix  */
+      * previous word as prefix  */
       if (na < aSuffixLen.contents - 1 && nb < bSuffixLen.contents - 1) {
         aSuffixLenBoundary.contents = aSuffixLen.contents;
         bSuffixLenBoundary.contents = bSuffixLen.contents;
