@@ -5,19 +5,19 @@ open Helpers;
 let suggestifyList = suggestions =>
   suggestions |> List.map(sug => yellow("- " ++ sug));
 
-let refmttypeNewlineR = Re_pcre.regexp({|\\n|});
+let refmttypeNewlineR = Re.Pcre.regexp({|\\n|});
 
 /*
  * Remove GADT cruft etc.
  */
-let gadtR = Re_pcre.regexp({|\$[a-zA-Z0-9']*|});
+let gadtR = Re.Pcre.regexp({|\$[a-zA-Z0-9']*|});
 
 let replaceDollar = s =>
   s.[0] === '$' ?
     "thereExistsAType_" ++ String.sub(s, 1, String.length(s) - 1) : s;
 
 let normalizeType = s =>
-  Re_pcre.substitute(~rex=gadtR, ~subst=replaceDollar, s);
+  Re.Pcre.substitute(~rex=gadtR, ~subst=replaceDollar, s);
 
 let toReasonTypes = (~refmttypePath, types) =>
   switch (refmttypePath) {
@@ -30,7 +30,7 @@ let toReasonTypes = (~refmttypePath, types) =>
     try (
       while (true) {
         result.contents = [
-          Re_pcre.substitute(
+          Re.Pcre.substitute(
             ~rex=refmttypeNewlineR,
             ~subst=(_) => "\n",
             input_line(input),
@@ -143,7 +143,7 @@ let renderInequality = (~isDetail, ~actual, ~expected) => {
   String.concat("\n", ret);
 };
 
-let doubleUnder = Re_pcre.regexp({|__|});
+let doubleUnder = Re.Pcre.regexp({|__|});
 
 let subDot = s => ".";
 

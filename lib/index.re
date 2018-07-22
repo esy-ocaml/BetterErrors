@@ -71,7 +71,7 @@ let normalizeCompilerLineColsToRange = (~fileLines, ~lineRaw, ~col1Raw, ~col2Raw
 
 /* has the side-effect of reading the file */
 let extractFromFileMatch = (fileMatch) =>
-  Re_pcre.(
+  Re.Pcre.(
     switch fileMatch {
     | [Delim(_), Group(_, filePath), Group(_, lineNum), col1, col2, Text(body)] =>
       let cachedContent = Helpers.fileLinesOfExn(filePath);
@@ -110,7 +110,7 @@ let printFullSplitResult =
     (i, x) => {
       print_int(i);
       print_endline("");
-      Re_pcre.(
+      Re.Pcre.(
         switch x {
         | Delim(a) => print_endline("Delim " ++ a)
         | Group(_, a) => print_endline("Group " ++ a)
@@ -122,14 +122,14 @@ let printFullSplitResult =
   );
 
 let fileR =
-  Re_pcre.regexp(
-    ~flags=[Re_pcre.(`MULTILINE)],
+  Re.Pcre.regexp(
+    ~flags=[Re.Pcre.(`MULTILINE)],
     {|^File "([\s\S]+?)", line (\d+)(?:, characters (\d+)-(\d+))?:$|}
   );
 
-let hasErrorOrWarningR = Re_pcre.regexp(~flags=[Re_pcre.(`MULTILINE)], {|^(Error|Warning \d+): |});
+let hasErrorOrWarningR = Re.Pcre.regexp(~flags=[Re.Pcre.(`MULTILINE)], {|^(Error|Warning \d+): |});
 
-let hasIndentationR = Re_pcre.regexp(~flags=[Re_pcre.(`MULTILINE)], {|^       +|});
+let hasIndentationR = Re.Pcre.regexp(~flags=[Re.Pcre.(`MULTILINE)], {|^       +|});
 
 /* TODO: make the below work. the "Here is an example..." is followed by even more lines of hints */
 /* let hasHintRStr = {|^(Hint: Did you mean |Here is an example of a value that is not matched:)|} */
@@ -138,28 +138,28 @@ let hasHintRStr = {|^Hint: Did you mean |};
 
 let argCannotBeAppliedWithLabelRStr = {|^This argument cannot be applied with label|};
 
-let hasHintR = Re_pcre.regexp(~flags=[Re_pcre.(`MULTILINE)], hasHintRStr);
+let hasHintR = Re.Pcre.regexp(~flags=[Re.Pcre.(`MULTILINE)], hasHintRStr);
 
 let argCannotBeAppliedWithLabelR =
-  Re_pcre.regexp(~flags=[Re_pcre.(`MULTILINE)], argCannotBeAppliedWithLabelRStr);
+  Re.Pcre.regexp(~flags=[Re.Pcre.(`MULTILINE)], argCannotBeAppliedWithLabelRStr);
 
 let notVisibleInCurrentScopeStr = {|^not visible in the current scope|};
 
 let notVisibleInCurrentScopeR =
-  Re_pcre.regexp(~flags=[Re_pcre.(`MULTILINE)], notVisibleInCurrentScopeStr);
+  Re.Pcre.regexp(~flags=[Re.Pcre.(`MULTILINE)], notVisibleInCurrentScopeStr);
 
 let theyWillNotBeSelectedStr = {|^They will not be selected|};
 
 let theyWillNotBeSelectedR =
-  Re_pcre.regexp(~flags=[Re_pcre.(`MULTILINE)], theyWillNotBeSelectedStr);
+  Re.Pcre.regexp(~flags=[Re.Pcre.(`MULTILINE)], theyWillNotBeSelectedStr);
 
 let parse = (~customLogOutputProcessors, ~customErrorParsers, err) => {
   /* we know whatever err is, it starts with "File: ..." because that's how `parse`
      is used */
   let err = String.trim(err);
   try (
-    switch (Re_pcre.full_split(~rex=fileR, err)) {
-    | [Re_pcre.Delim(_), Group(_, filePath), Group(_, lineNum), col1, col2, Text(body)] =>
+    switch (Re.Pcre.full_split(~rex=fileR, err)) {
+    | [Re.Pcre.Delim(_), Group(_, filePath), Group(_, lineNum), col1, col2, Text(body)] =>
       /* important, otherwise leaves random blank lines that defies some of
          our regex logic, maybe */
       let body = String.trim(body);
@@ -244,9 +244,9 @@ let parseFromStdin = (~refmttypePath, ~customLogOutputProcessors, ~customErrorPa
   let forEachLine = (line) =>
     switch (
       reverseErrBuffer.contents,
-      Re_pcre.pmatch(~rex=fileR, line),
-      Re_pcre.pmatch(~rex=hasErrorOrWarningR, line),
-      Re_pcre.pmatch(~rex=hasIndentationR, line)
+      Re.Pcre.pmatch(~rex=fileR, line),
+      Re.Pcre.pmatch(~rex=hasErrorOrWarningR, line),
+      Re.Pcre.pmatch(~rex=hasIndentationR, line)
     ) {
     | ([], false, false, false) =>
       /* no error, just stream on the line */
@@ -284,10 +284,10 @@ let parseFromStdin = (~refmttypePath, ~customLogOutputProcessors, ~customErrorPa
                       customErrorParsers:(string * string list) list -> unit
              This argument cannot be applied with label ~raiseExceptionDuringParse
          */
-      if (Re_pcre.pmatch(~rex=hasHintR, line)
-          || Re_pcre.pmatch(~rex=argCannotBeAppliedWithLabelR, line)
-          || Re_pcre.pmatch(~rex=notVisibleInCurrentScopeR, line)
-          || Re_pcre.pmatch(~rex=theyWillNotBeSelectedR, line)) {
+      if (Re.Pcre.pmatch(~rex=hasHintR, line)
+          || Re.Pcre.pmatch(~rex=argCannotBeAppliedWithLabelR, line)
+          || Re.Pcre.pmatch(~rex=notVisibleInCurrentScopeR, line)
+          || Re.Pcre.pmatch(~rex=theyWillNotBeSelectedR, line)) {
         reverseErrBuffer.contents =
           [line, ...reverseErrBuffer.contents]
           /* let bufferText = revBufferToStr(reverseErrBuffer.contents);

@@ -27,9 +27,9 @@ let functionArgsCount = str => {
   /* the func type 'a -> (int -> 'b) -> string has 2 arguments */
   /* strip out false positive -> from nested function types passed as param */
   /* Fortunately, raw ocaml types don't use parenthesis for anything. */
-  let nestedFunctionTypeR = Re_pcre.regexp({|\([\s\S]+\)|});
+  let nestedFunctionTypeR = Re.Pcre.regexp({|\([\s\S]+\)|});
   let cleaned =
-    Re_pcre.substitute(~rex=nestedFunctionTypeR, ~subst=(_) => "|||||", str);
+    Re.Pcre.substitute(~rex=nestedFunctionTypeR, ~subst=(_) => "|||||", str);
   /* TODO: allow pluggable function type syntax */
   List.length(split({|->|}, cleaned)) - 1;
 };
@@ -38,9 +38,9 @@ let functionArgsCount = str => {
 /* TODO: when it's a -> b vs b, ask if whether user forgot an argument to the
    func */
 let incompatR =
-  Re_pcre.regexp({|([\s\S]*?)is not compatible with type([\s\S]*)|});
+  Re.Pcre.regexp({|([\s\S]*?)is not compatible with type([\s\S]*)|});
 
-let typeIncompatsR = Re_pcre.regexp({|\s*\s\sType|});
+let typeIncompatsR = Re.Pcre.regexp({|\s*\s\sType|});
 
 let extractTypeIncompatsFromExtra = extra => {
   /*
@@ -49,13 +49,13 @@ let extractTypeIncompatsFromExtra = extra => {
    * hard to make the original regex capture the two leading spaces.
    */
   let extraWithTwoSpaces = "  " ++ extra;
-  let splitted = Re_pcre.full_split(~rex=typeIncompatsR, extraWithTwoSpaces);
+  let splitted = Re.Pcre.full_split(~rex=typeIncompatsR, extraWithTwoSpaces);
   let folder = ((curOther, curIncompats), next) =>
     switch (next) {
-    | Re_pcre.Text(str) =>
+    | Re.Pcre.Text(str) =>
       let (incompatA, incompatB) = (
-        Re_pcre.get_substring(Re_pcre.exec(~rex=incompatR, str), 1),
-        Re_pcre.get_substring(Re_pcre.exec(~rex=incompatR, str), 2),
+        Re.Pcre.get_substring(Re.Pcre.exec(~rex=incompatR, str), 1),
+        Re.Pcre.get_substring(Re.Pcre.exec(~rex=incompatR, str), 2),
       );
       let incompat = {
         actual: splitEquivalentTypes(incompatA),
@@ -128,7 +128,7 @@ let type_UnboundValue = (err, _, _) => {
   let suggestionR = {|Unbound value [\w\.]*[\s\S]Hint: Did you mean ([\s\S]+)\?|};
   let suggestions =
     get_match_maybe(suggestionR, err)
-    |> Helpers.optionMap(Re_pcre.split(~rex=Re_pcre.regexp({|, | or |})));
+    |> Helpers.optionMap(Re.Pcre.split(~rex=Re.Pcre.regexp({|, | or |})));
   Type_UnboundValue({unboundValue, suggestions});
 };
 
@@ -412,11 +412,11 @@ let type_UnboundModule = (err, _, _) => {
 /* TODO: apparently syntax error can be followed by more indications */
 /* need: way, way more information, I can't even */
 let file_SyntaxError = (err, cachedContent, range) => {
-  let allR = Re_pcre.regexp({|Syntax error|});
-  let allUnknownR = Re_pcre.regexp({|<UNKNOWN SYNTAX ERROR>|});
+  let allR = Re.Pcre.regexp({|Syntax error|});
+  let allUnknownR = Re.Pcre.regexp({|<UNKNOWN SYNTAX ERROR>|});
   /* raise the same error than if we failed to match */
-  if (! Re_pcre.pmatch(~rex=allR, err)
-      && ! Re_pcre.pmatch(~rex=allUnknownR, err)) {
+  if (! Re.Pcre.pmatch(~rex=allR, err)
+      && ! Re.Pcre.pmatch(~rex=allUnknownR, err)) {
     raise(Not_found);
   } else {
     let hintR = {|Syntax error:([\s\S]+)|};
@@ -469,7 +469,7 @@ let parsers = [
   file_IllegalCharacter,
 ];
 
-let goodFileNameR = Re_pcre.regexp({|^[a-zA-Z][a-zA-Z_\d]+\.\S+$|});
+let goodFileNameR = Re.Pcre.regexp({|^[a-zA-Z][a-zA-Z_\d]+\.\S+$|});
 
 let cannotFindFileRStr = {|Cannot find file ([\s\S]+)|};
 

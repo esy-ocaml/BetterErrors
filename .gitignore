@@ -20,3 +20,4 @@ node_modules
 tests/test.ml
 
 yarn-error.log
+**/.merlin
