@@ -5,7 +5,8 @@
   "dependencies": {
     "@opam/jbuilder": "*",
     "@opam/re": "*",
-    "@esy-ocaml/reason": "^3.0.0"
+    "@esy-ocaml/reason": "^3.0.0",
+    "ocaml": " >= 4.2.0  < 4.7.0"
   },
   "repository": {
     "type": "git",
@@ -14,12 +15,10 @@
   "author": {
     "name": "chenglou"
   },
-  "peerDependencies": {
-    "ocaml": " >= 4.2.0  < 4.7.0"
-  },
   "devDependencies": {
     "@esy-ocaml/merlin": "*",
-    "ocaml": "~4.6.0"
+    "ocaml": "~4.6.0",
+    "@esy-ocaml/reason": "3.3.3"
   },
   "esy": {
     "build": [
