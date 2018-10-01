@@ -1,8 +1,8 @@
 build:
 	# Creating ocamlBetterErrors.opam so that jbuilder builds.
-	jbuilder build -j 8
+	dune build --profile=release -j 8
 
-install: build 
+install: build
 	esy-installer
 
 test:

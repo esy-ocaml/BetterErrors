@@ -43,11 +43,11 @@ let splitLeadingWhiteSpace = s => {
 
 let doubleUnder = Re.Pcre.regexp({|__|});
 
-let subDot = s => ".";
+let subDot = _ => ".";
 
 let moreThanOneSpace = Re.Pcre.regexp({|\s[\s]*|});
 
-let subOneSpace = s => " ";
+let subOneSpace = _ => " ";
 
 /*
 * Collapses multiple spaces into a single space.
@@ -74,7 +74,7 @@ let indentStr = (prefixStr, s) =>
 /* Batteries library substitutes */
 let listDrop = (n, lst) => {
   let lst = ref(lst);
-  for (i in 1 to n) {
+  for (_ in 1 to n) {
     lst := List.tl(lst^);
   };
   lst^;
@@ -91,7 +91,7 @@ let listDropWhile = (f, lst) => {
 let listTake = (n, lst) => {
   let result = ref([]);
   let lst = ref(lst);
-  for (i in 1 to n) {
+  for (_ in 1 to n) {
     result := [List.hd(lst^), ...result^];
     lst := List.tl(lst^);
   };
@@ -124,7 +124,7 @@ let listFilterMap = (f, lst) =>
   List.map(f, lst)
   |> List.filter(
       fun
-      | Some(a) => true
+      | Some(_) => true
       | None => false,
     )
   |> List.map(optionGet);
@@ -133,7 +133,7 @@ let listFindMap = (f, lst) =>
   lst
   |> List.find(a =>
       switch (f(a)) {
-      | Some(x) => true
+      | Some(_) => true
       | None => false
       }
     )
@@ -286,7 +286,7 @@ let sp = Printf.sprintf;
 */
 let hasNewline = str =>
   switch (String.index_from(str, 0, '\n')) {
-  | exception e => false
+  | exception _ => false
   | _ => true
   };
 
