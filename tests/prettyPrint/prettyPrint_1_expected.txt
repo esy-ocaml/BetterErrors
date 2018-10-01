@@ -1,18 +1,18 @@
-[2m[1m[39m# Unformatted Error Output:[0m
-[2m# [0m[2mFile "tests/prettyPrint/prettyPrint_1.ml", line 5, characters 38-45:[0m
-[2m# [0m[2mError: The constructor Coconut expects 1 argument(s),[0m
-[2m# [0m[2m       but is applied here to 0 argument(s)[0m
+[1m[2m# Unformatted Error Output:[22m[22m
+[2m# [22m[2mFile "tests/prettyPrint/prettyPrint_1.ml", line 5, characters 38-45:[22m
+[2m# [22m[2mError: The constructor Coconut expects 1 argument(s),[22m
+[2m# [22m[2m       but is applied here to 0 argument(s)[22m
 
 
-[7m[1m[31m ERROR [0m [4m[36mtests/prettyPrint/prettyPrint_1.ml[0m[4m[2m[39m:5 38-45[0m [1m[31m[0m
+[31m[1m[7m ERROR [27m[22m[39m [36m[4mtests/prettyPrint/prettyPrint_1.ml[24m[39m[2m[4m:5 38-45[24m[22m 
 
-[2m 2 ┆ [0m
-[2m 3 ┆ [0m[2m[35mtype[0m[2m[39m bread =[0m
-[2m 4 ┆ [0m[2m[39m  | [0m[2m[34mCoconut[0m[2m[39m of [0m[2m[33mstring[0m
-[2m[31m 5 ┆ [0m[2m[35mlet[0m[2m[39m morning = [0m[4m[1m[31mCoconut[0m
-[2m 6 ┆ [0m
-[2m 7 ┆ [0m
-[2m 8 ┆ [0m
+[2m 2 ┆ [22m
+[2m 3 ┆ [22m[35m[2mtype[22m[39m[2m bread =[22m
+[2m 4 ┆ [22m[2m  | [22m[34m[2mCoconut[22m[39m[2m of [22m[33m[2mstring[22m[39m
+[31m[2m 5 ┆ [22m[39m[35m[2mlet[22m[39m[2m morning = [22m[31m[1m[4mCoconut[24m[22m[39m
+[2m 6 ┆ [22m
+[2m 7 ┆ [22m
+[2m 8 ┆ [22m
 
 You must pass exactly 1 argument to this variant. You have passed 0 arguments.
 

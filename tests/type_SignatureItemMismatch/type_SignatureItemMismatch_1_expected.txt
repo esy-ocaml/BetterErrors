@@ -1,31 +1,31 @@
-[2m[1m[39m# Unformatted Error Output:[0m
-[2m# [0m[2mFile "tests/type_SignatureItemMismatch/type_SignatureItemMismatch_1.ml", line 6, characters 24-62:[0m
-[2m# [0m[2mError: Signature mismatch:[0m
-[2m# [0m[2m       Modules do not match:[0m
-[2m# [0m[2m         sig val createElement2 : 'a -> unit end[0m
-[2m# [0m[2m       is not included in[0m
-[2m# [0m[2m         Sig[0m
-[2m# [0m[2m       The value `createElement' is required but not provided[0m
-[2m# [0m[2m       File "tests/type_SignatureItemMismatch/type_SignatureItemMismatch_1.ml", line 3, characters 2-35:[0m
-[2m# [0m[2m         Expected declaration[0m
+[1m[2m# Unformatted Error Output:[22m[22m
+[2m# [22m[2mFile "tests/type_SignatureItemMismatch/type_SignatureItemMismatch_1.ml", line 6, characters 24-62:[22m
+[2m# [22m[2mError: Signature mismatch:[22m
+[2m# [22m[2m       Modules do not match:[22m
+[2m# [22m[2m         sig val createElement2 : 'a -> unit end[22m
+[2m# [22m[2m       is not included in[22m
+[2m# [22m[2m         Sig[22m
+[2m# [22m[2m       The value `createElement' is required but not provided[22m
+[2m# [22m[2m       File "tests/type_SignatureItemMismatch/type_SignatureItemMismatch_1.ml", line 3, characters 2-35:[22m
+[2m# [22m[2m         Expected declaration[22m
 
 
-[7m[1m[31m ERROR [0m [4m[36mtests/type_SignatureItemMismatch/type_SignatureItemMismatch_1.ml[0m[4m[2m[39m:6:24-8:3[0m [1m[31m[0m
+[31m[1m[7m ERROR [27m[22m[39m [36m[4mtests/type_SignatureItemMismatch/type_SignatureItemMismatch_1.ml[24m[39m[2m[4m:6:24-8:3[24m[22m 
 
-[2m3 ┆ [0m[2m[39m  val createElement: [0m[2m[33mstring[0m[2m[39m -> unit[0m
-[2m4 ┆ [0m[2m[39mend[0m
-[2m5 ┆ [0m
-[2m[31m6 ┆ [0m[2m[35mmodule[0m[2m[39m [0m[2m[34mMyModule[0m[2m[39m : [0m[2m[34mSig[0m[2m[39m = [0m[4m[1m[31mstruct[0m
-[2m[31m7 ┆ [0m  [4m[1m[31mlet createElement2 s = ()[0m
-[2m[31m8 ┆ [0m[4m[1m[31mend[0m
+[2m3 ┆ [22m[2m  val createElement: [22m[33m[2mstring[22m[39m[2m -> unit[22m
+[2m4 ┆ [22m[2mend[22m
+[2m5 ┆ [22m
+[31m[2m6 ┆ [22m[39m[35m[2mmodule[22m[39m[2m [22m[34m[2mMyModule[22m[39m[2m : [22m[34m[2mSig[22m[39m[2m = [22m[31m[1m[4mstruct[24m[22m[39m
+[31m[2m7 ┆ [22m[39m  [31m[1m[4mlet createElement2 s = ()[24m[22m[39m
+[31m[2m8 ┆ [22m[39m[31m[1m[4mend[24m[22m[39m
 
-[1mThis module is missing the value named[0m [1m[31mcreateElement[0m
+[1mThis module is missing the value named[22m [31m[1mcreateElement[22m[39m
 
-  The following signature requires that [1mcreateElement[0m be defined:
-  [36mtests/type_SignatureItemMismatch/type_SignatureItemMismatch_1.ml[0m[2m:3[0m
+  The following signature requires that [1mcreateElement[22m be defined:
+  [36mtests/type_SignatureItemMismatch/type_SignatureItemMismatch_1.ml[39m[2m:3[22m
 
 
-[1m[35mLearn:[0m "Signatures" are interfaces that modules may implement.
+[35m[1mLearn:[22m[39m "Signatures" are interfaces that modules may implement.
   You can indicate that a Reason file (.re) implements a signature by
   creating an "interface file" (.rei) of the same name.
   Modules nested inside of a Reason file may also opt into being checked

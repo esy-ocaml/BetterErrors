@@ -1,12 +1,12 @@
-[2m[1m[39m# Unformatted Error Output:[0m
-[2m# [0m[2mFile "tests/file_SyntaxError/file_SyntaxError_6.ml", line 2, characters 2-7:[0m
-[2m# [0m[2mError: Syntax error[0m
+[1m[2m# Unformatted Error Output:[22m[22m
+[2m# [22m[2mFile "tests/file_SyntaxError/file_SyntaxError_6.ml", line 2, characters 2-7:[22m
+[2m# [22m[2mError: Syntax error[22m
 
 
-[7m[1m[31m ERROR [0m [4m[36mtests/file_SyntaxError/file_SyntaxError_6.ml[0m[4m[2m[39m:2 2-7[0m [1m[31m[0m
+[31m[1m[7m ERROR [27m[22m[39m [36m[4mtests/file_SyntaxError/file_SyntaxError_6.ml[24m[39m[2m[4m:2 2-7[24m[22m 
 
-[2m1 ┆ [0m[2m[35mtype[0m[2m[39m fruits =[0m
-[2m[31m2 ┆ [0m[2m[39m| [0m[4m[1m[31mapple[0m[2m[39m of [0m[2m[33mstring[0m
+[2m1 ┆ [22m[35m[2mtype[22m[39m[2m fruits =[22m
+[31m[2m2 ┆ [22m[39m[2m| [22m[31m[1m[4mapple[24m[22m[39m[2m of [22m[33m[2mstring[22m[39m
 
 This is a syntax error.
 

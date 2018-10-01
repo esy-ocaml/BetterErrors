@@ -1,13 +1,13 @@
-[2m[1m[39m# Unformatted Error Output:[0m
-[2m# [0m[2mFile "tests/type_UnboundModule/type_UnboundModule_1.ml", line 1, characters 5-11:[0m
-[2m# [0m[2mError: Unbound module Camlp4[0m
+[1m[2m# Unformatted Error Output:[22m[22m
+[2m# [22m[2mFile "tests/type_UnboundModule/type_UnboundModule_1.ml", line 1, characters 5-11:[22m
+[2m# [22m[2mError: Unbound module Camlp4[22m
 
 
-[7m[1m[31m ERROR [0m [4m[36mtests/type_UnboundModule/type_UnboundModule_1.ml[0m[4m[2m[39m:1 5-11[0m [1m[31m[0m
+[31m[1m[7m ERROR [27m[22m[39m [36m[4mtests/type_UnboundModule/type_UnboundModule_1.ml[24m[39m[2m[4m:1 5-11[24m[22m 
 
-[2m[31m1 ┆ [0m[2m[35mopen[0m[2m[39m [0m[4m[1m[31mCamlp4[0m[2m[39m;;[0m
+[31m[2m1 ┆ [22m[39m[35m[2mopen[22m[39m[2m [22m[31m[1m[4mCamlp4[24m[22m[39m[2m;;[22m
 
-Module [1m[31mCamlp4;[0m not found in included libraries.
+Module [31m[1mCamlp4;[22m[39m not found in included libraries.
 
 Hint: You might need to tell your build system to depend on a library that contains Camlp4;.
 You can see which libraries are available by doing `ocamlfind list` (or `esy ocamlfind list` inside your esy project)
