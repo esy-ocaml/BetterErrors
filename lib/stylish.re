@@ -31,100 +31,41 @@ module type StylishSig = {
 module ANSIStylish: StylishSig = {
   let concatList = String.concat;
 
-  let resetANSI = "\027[0m";
+  let bold = Chalk.bold;
 
-  let bold = s => "\027[1m" ++ s ++ resetANSI;
+  let invert = Chalk.inverse;
 
-  let boldCode = b => b ? "\027[1m" : "";
+  let dim = Chalk.dim;
 
-  let invert = s => "\027[7m" ++ s ++ resetANSI;
+  let underline = Chalk.underline;
 
-  let invertCode = b => b ? "\027[7m" : "";
+  let normal = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) => {
+    <Chalk underline inverse=invert dim bold>s</Chalk>
+  }
 
-  let dim = s => "\027[2m" ++ s ++ resetANSI;
+  let red = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) => {
+    <Chalk underline inverse=invert dim bold color=Red>s</Chalk>
+  }
 
-  let dimCode = b => b ? "\027[2m" : "";
+  let yellow = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) => {
+    <Chalk underline inverse=invert dim bold color=Yellow>s</Chalk>
+  }
 
-  let underlineCode = u => u ? "\027[4m" : "";
+  let blue = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) => {
+    <Chalk underline inverse=invert dim bold color=Blue>s</Chalk>
+  }
 
-  let normalCode = "\027[39m";
+  let green = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) => {
+    <Chalk underline inverse=invert dim bold color=Green>s</Chalk>
+  }
 
-  let redCode = "\027[31m";
+  let cyan = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) => {
+    <Chalk underline inverse=invert dim bold color=Cyan>s</Chalk>
+  }
 
-  let yellowCode = "\027[33m";
-
-  let blueCode = "\027[34m";
-
-  let greenCode = "\027[32m";
-
-  let purpleCode = "\027[35m";
-
-  let cyanCode = "\027[36m";
-
-  let underline = s => underlineCode(true) ++ s ++ resetANSI;
-
-  let normal = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-    underlineCode(underline)
-    ++ invertCode(invert)
-    ++ dimCode(dim)
-    ++ boldCode(bold)
-    ++ normalCode
-    ++ s
-    ++ resetANSI;
-
-  let red = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-    underlineCode(underline)
-    ++ invertCode(invert)
-    ++ dimCode(dim)
-    ++ boldCode(bold)
-    ++ redCode
-    ++ s
-    ++ resetANSI;
-
-  let yellow = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-    underlineCode(underline)
-    ++ invertCode(invert)
-    ++ dimCode(dim)
-    ++ boldCode(bold)
-    ++ yellowCode
-    ++ s
-    ++ resetANSI;
-
-  let blue = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-    underlineCode(underline)
-    ++ invertCode(invert)
-    ++ dimCode(dim)
-    ++ boldCode(bold)
-    ++ blueCode
-    ++ s
-    ++ resetANSI;
-
-  let green = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-    underlineCode(underline)
-    ++ invertCode(invert)
-    ++ dimCode(dim)
-    ++ boldCode(bold)
-    ++ greenCode
-    ++ s
-    ++ resetANSI;
-
-  let cyan = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-    underlineCode(underline)
-    ++ invertCode(invert)
-    ++ dimCode(dim)
-    ++ boldCode(bold)
-    ++ cyanCode
-    ++ s
-    ++ resetANSI;
-
-  let purple = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) =>
-    underlineCode(underline)
-    ++ invertCode(invert)
-    ++ dimCode(dim)
-    ++ boldCode(bold)
-    ++ purpleCode
-    ++ s
-    ++ resetANSI;
+  let purple = (~underline=false, ~invert=false, ~dim=false, ~bold=false, s) => {
+    <Chalk underline inverse=invert dim bold color=Magenta>s</Chalk>
+  }
 
   let stringSlice = (~first=0, ~last=?, str) => {
     let last =

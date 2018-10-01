@@ -6,7 +6,8 @@
     "@opam/jbuilder": "*",
     "@opam/re": "*",
     "@esy-ocaml/reason": "^3.0.0",
-    "ocaml": " >= 4.2.0  < 4.7.0"
+    "ocaml": " >= 4.2.0  < 4.7.0",
+    "@reason-native/chalk": "link:../chalk"
   },
   "repository": {
     "type": "git",

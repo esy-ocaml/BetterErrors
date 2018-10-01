@@ -7,7 +7,7 @@ module Make = (Styl: Stylish.StylishSig) => {
   open Helpers;
   open Printer;
   open Styl;
-  
+
   let numberOfDigits = n => {
     let digits = ref(1);
     let nn = ref(n);
@@ -17,12 +17,12 @@ module Make = (Styl: Stylish.StylishSig) => {
     };
     digits^;
   };
-  
-  
-  
+
+
+
   let pad = (~ch=' ', content, n) =>
     String.make(n - String.length(content), ch) ++ content;
-  
+
   let startingSpacesCount = str => {
     let rec startingSpacesCount' = (str, idx) =>
       if (idx == String.length(str)) {
@@ -34,7 +34,7 @@ module Make = (Styl: Stylish.StylishSig) => {
       };
     startingSpacesCount'(str, 0);
   };
-  
+
   /* row and col 0-indexed; endColumn is 1 past the actual end. See
      Main.compilerLineColsToRange */
   let _printFile =
@@ -132,7 +132,7 @@ module Make = (Styl: Stylish.StylishSig) => {
     };
     revResult.contents;
   };
-  
+
   let printFile = (~isWarningWithCode=?, {cachedContent, filePath, range}) => {
     let ((startRow, startColumn), (endRow, endColumn)) = range;
     let (isWarning, labelColor, label, warningCodeStr) =
@@ -186,7 +186,7 @@ module Make = (Styl: Stylish.StylishSig) => {
       cachedContent,
     );
   };
-  
+
   /**
    * Processes standard log lines that don't have anything to do with
    * errors/warnings, or files. Useful for hiding/transforming/relativizing file
@@ -198,7 +198,7 @@ module Make = (Styl: Stylish.StylishSig) => {
       str,
       customLogOutputProcessors,
     );
-  
+
   let prettyPrintParsedResult =
       (~originalRevLines: list(string), ~refmttypePath, result: result)
       : list(string) =>
