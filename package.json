@@ -29,8 +29,8 @@
     ],
     "install": [
       [
-        "make",
-        "install"
+        "esy-installer",
+        "refmterr.install"
       ]
     ],
     "buildsInSource": "_build"
