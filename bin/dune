@@ -1,7 +1,5 @@
-(jbuild_version 1)
-
 (
-  executable (
+  executable 
 
     ; The public name of the binary (name by which it is ran). Choosing same name
     ; as main module name.
@@ -15,11 +13,10 @@
     ; Depends on:
     ; - 2 local libraries defined in this project.
     ; - 1 library flow parser, defined in package dependency flow_parser.
-    (libraries (refmterr.lib re.pcre unix))
-  )
+    (libraries refmterr.lib re.pcre unix)
 )
 
 (install
- ((section bin)
-  (package refmterr)
-  (files ((refmterr as refmterr)))))
+ (section bin)
+ (package refmterr)
+ (files (refmterr as refmterr)))
