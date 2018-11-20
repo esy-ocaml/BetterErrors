@@ -1,7 +1,7 @@
 # `refmterr`: Reason Formatting of Errors for Native Builds.
 
 #### Demo
-![Demo](https://raw.githubusercontent.com/esy-ocaml/BetterErrors/master/demo.png)
+![Demo](https://raw.githubusercontent.com/esy-ocaml/BetterErrors/master/demo.jpg)
 
 
 ## Support
